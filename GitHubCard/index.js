@@ -1,5 +1,5 @@
 import axios from 'axios';
-console.log(axios);
+
 
 /*
   STEP 1: using axios, send a GET request to the following URL
@@ -61,3 +61,47 @@ const followersArray = [];
     luishrd
     bigknell
 */
+function cardMaker(data){
+  const divCard = document.createElement('div');
+  const image = document.createElement('img');
+  const divInfo = document.createElement('div');
+  const h3name = document.createElement('h3');
+  const pUser = document.createElement('p');
+  const pLctn = document.createElement('p');
+  const pProfile = document.createElement('p');
+  const a = document.createElement('a');
+  const pFollowers = document.createElement('p');
+  const pFollowing = document.createElement('p');
+  const pBio = document.createElement('p');
+
+  divCard.classList.add('card');
+  image.src = `${res.data.avatar_url}`;
+  divInfo.classList.add('card-info');
+  h3name.classList.add('name');
+  pUser.classList.add('username');
+  a.href = `${res.data.url}`;
+
+  h3name.textContent(`${res.data.name}`);
+  pUser.textContent(`${res.data.login}`);
+  pLctn.textContent(`Location: ${res.data.location}`);
+  pProfile.textContent('Profile:');
+  a.textContent(`${res.data.url}`);
+  pFollowers.textContent(`Followers: ${res.data.followers}`);
+  pFollowing.textContent(`Following: ${res.data.following}`);
+  pBio.textContent(`Bio: ${res.data.bio}`)
+
+
+};
+
+
+
+
+axios
+  .get('https://api.github.com/users/StephanieEnciso')
+  .then((res) => {
+
+  })
+  .catch((err) => {
+    debugger;
+  });
+
