@@ -1,3 +1,20 @@
+import axios from 'axios';
+
+const cards = document.querySelector('.cards');
+axios
+  .get('https://api.github.com/users/StephanieEnciso')
+  .then((res) => {
+    console.log(res);
+    const info = res.data;
+    const gitCard = cardMaker(info);
+    cards.appendChild(gitCard);
+  })
+  .catch((err) => {
+  
+    debugger;
+  });
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -28,7 +45,18 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach((followers) => {
+  const urls = 'https://api.github.com/users/' + followers;
+  axios.get(urls)
+    .then((res) => {
+      const newCards = cardMaker(res.data);
+      cards.appendChild(newCards);
+    
+    });
+});
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +86,51 @@ const followersArray = [];
     luishrd
     bigknell
 */
+function cardMaker(data){
+  const divCard = document.createElement('div');
+  const image = document.createElement('img');
+  const divInfo = document.createElement('div');
+  const h3name = document.createElement('h3');
+  const pUser = document.createElement('p');
+  const pLctn = document.createElement('p');
+  const pProfile = document.createElement('p');
+  const a = document.createElement('a');
+  const pFollowers = document.createElement('p');
+  const pFollowing = document.createElement('p');
+  const pBio = document.createElement('p');
+
+  divCard.classList.add('card');
+  image.src = `${data.avatar_url}`;
+  divInfo.classList.add('card-info');
+  h3name.classList.add('name');
+  pUser.classList.add('username');
+  a.href = `${data.url}`;
+
+  h3name.textContent = `${data.name}`;
+  pUser.textContent = `${data.login}`;
+  pLctn.textContent = `Location: ${data.location}`;
+  pProfile.textContent = 'Profile:';
+  a.textContent = `${data.url}`;
+  pFollowers.textContent = `Followers: ${data.followers}`;
+  pFollowing.textContent = `Following: ${data.following}`;
+  pBio.textContent = `Bio: ${data.bio}`;
+
+  divCard.appendChild(image);
+  divCard.appendChild(divInfo);
+  divInfo.appendChild(h3name);
+  divInfo.appendChild(pUser);
+  divInfo.appendChild(pLctn);
+  divInfo.appendChild(pProfile);
+  pProfile.appendChild(a);
+  divInfo.appendChild(pFollowers);
+  divInfo.appendChild(pFollowing);
+  divInfo.appendChild(pBio);
+
+  return divCard;
+
+};
+
+
+
+
+
