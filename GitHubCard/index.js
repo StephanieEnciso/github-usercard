@@ -1,5 +1,19 @@
 import axios from 'axios';
 
+const cards = document.querySelector('.cards');
+axios
+  .get('https://api.github.com/users/StephanieEnciso')
+  .then((res) => {
+    console.log(res);
+    const info = res.data;
+    const gitCard = cardMaker(info);
+    cards.appendChild(gitCard);
+  })
+  .catch((err) => {
+  
+    debugger;
+  });
+
 
 /*
   STEP 1: using axios, send a GET request to the following URL
@@ -75,33 +89,37 @@ function cardMaker(data){
   const pBio = document.createElement('p');
 
   divCard.classList.add('card');
-  image.src = `${res.data.avatar_url}`;
+  image.src = `${data.avatar_url}`;
   divInfo.classList.add('card-info');
   h3name.classList.add('name');
   pUser.classList.add('username');
-  a.href = `${res.data.url}`;
+  a.href = `${data.url}`;
 
-  h3name.textContent(`${res.data.name}`);
-  pUser.textContent(`${res.data.login}`);
-  pLctn.textContent(`Location: ${res.data.location}`);
-  pProfile.textContent('Profile:');
-  a.textContent(`${res.data.url}`);
-  pFollowers.textContent(`Followers: ${res.data.followers}`);
-  pFollowing.textContent(`Following: ${res.data.following}`);
-  pBio.textContent(`Bio: ${res.data.bio}`)
+  h3name.textContent = `${data.name}`;
+  pUser.textContent = `${data.login}`;
+  pLctn.textContent = `Location: ${data.location}`;
+  pProfile.textContent = 'Profile:';
+  a.textContent = `${data.url}`;
+  pFollowers.textContent = `Followers: ${data.followers}`;
+  pFollowing.textContent = `Following: ${data.following}`;
+  pBio.textContent = `Bio: ${data.bio}`;
 
+  divCard.appendChild(image);
+  divCard.appendChild(divInfo);
+  divInfo.appendChild(h3name);
+  divInfo.appendChild(pUser);
+  divInfo.appendChild(pLctn);
+  divInfo.appendChild(pProfile);
+  pProfile.appendChild(a);
+  divInfo.appendChild(pFollowers);
+  divInfo.appendChild(pFollowing);
+  divInfo.appendChild(pBio);
+
+  return divCard;
 
 };
 
 
 
 
-axios
-  .get('https://api.github.com/users/StephanieEnciso')
-  .then((res) => {
-
-  })
-  .catch((err) => {
-    debugger;
-  });
 
